@@ -1,0 +1,75 @@
+#include <stdio.h>
+
+int firstComment (void);
+int endComment (void);
+void quoteCheck (void);
+
+int c;
+int br,bk,pr; //braces, brackets and parenthesis
+
+int main(void) {
+  int c;
+  int br,bk,pr;
+   while ((c = getchar()) != EOF) {
+       if (c == '"' || c == '\''){ // checking for quotes and comments
+           quoteCheck();
+       } else if (firstComment()) {
+             while ( !(endComment())) {
+             putchar(' ');
+       }
+             printf(" ");
+      } else {
+        putchar(c); // not comment
+      }
+
+      if (br > 0 || br < 0){
+        printf("unbalanced bracces\n");
+        br = 0;
+      }
+      else if (bk > 0 ||bk < 0){
+        printf("unbalanced brackets\n");
+        bk = 0;
+      }
+      else if (pr > 0 ||pr < 0){
+        printf("unbalanced parenthesis");
+        pr = 0;
+      } 
+   }
+   return 0;
+}
+
+
+int firstComment(void) {
+  int c;
+
+   if (c == '/') {
+      c = getchar();
+      if (c == '*') {
+         return 1;
+      } else {
+         putchar('/');
+      }
+   }
+   return 0;
+}
+
+int endComment() {
+   int c;
+   c = getchar();
+   if (c == '*') {
+      c = getchar();
+      if (c == '/') {
+         return 1;
+      }
+   }
+   return 0;
+}
+
+void quoteCheck(void){
+    int c;
+    do {
+        putchar(c);
+        c = getchar();
+    } while (c == '"');
+    putchar(c);
+}
